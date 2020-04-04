@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Services\Frontend;
+
+namespace App\Services\Cms\Page;
+
 
 use App\Repositories\Frontend\Contracts\PageRepositoryInterface;
+use App\Services\Frontend\RouteService;
 
 class PageService
 {
@@ -13,14 +16,6 @@ class PageService
     {
         $this->routeService = $routeService;
         $this->pageRepository = $pageRepository;
-    }
-
-    public function getAllData($slug)
-    {
-        return [
-            'data' => $this->routeService->getRequestedRouteData($slug),
-            'nav' => $this->routeService->getAllRoutes(),
-        ];
     }
 
     public function createPage()

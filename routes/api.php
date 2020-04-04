@@ -14,7 +14,15 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware(['api'])->group(function () {
+    /*
+     * Menu
+     */
     Route::get('/menu', 'Cms\PageController@getMenu');
+
+    /*
+     * Pages
+     */
+    Route::get('/pages/create', 'Cms\PageController@store');
 
     Route::get('user/profile', function () {
         // Uses first & second Middleware
