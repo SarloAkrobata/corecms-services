@@ -4,7 +4,7 @@
 namespace App\Services\Cms\Page;
 
 
-use App\Repositories\Frontend\Contracts\PageRepositoryInterface;
+use App\Repositories\Cms\Contracts\PageRepositoryInterface;
 use App\Services\Frontend\RouteService;
 
 class PageService

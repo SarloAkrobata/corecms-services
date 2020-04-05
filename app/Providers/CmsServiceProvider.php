@@ -14,6 +14,11 @@ class CmsServiceProvider extends ServiceProvider
     public function register()
     {
         $models = [
+            'Cms' => [
+                'Authentication',
+                'Page',
+                'Route'
+            ],
             'Frontend' => [
                 'Page',
                 'Route'
