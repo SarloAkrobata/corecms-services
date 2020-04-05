@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Cms;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Page\PageRequest;
 use App\Services\Frontend\PageService;
+use App\Services\Cms\Page\PageService as CmsPageService;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
     private $pageService;
+    private $cmsPageService;
 
-    public function __construct(PageService $pageService)
+    public function __construct(PageService $pageService, CmsPageService $cmsPageService)
     {
         $this->pageService = $pageService;
+        $this->cmsPageService = $cmsPageService;
     }
 
     public function getMenu($slug = 'home')
@@ -29,6 +32,29 @@ class PageController extends Controller
 
     public function store(PageRequest $request)
     {
-
+        $this->cmsPageService->createPage($request->all());
     }
+
+    public function update($id, PageRequest $request)
+    {
+        $this->cmsPageService->updatePage($id, $request->all());
+    }
+
+    public function show($pageId)
+    {
+        $page = $this->cmsPageService->getPage($pageId);
+        return response()->json($page);
+    }
+
+    public function index()
+    {
+        $allPages = $this->cmsPageService->getAllPages();
+        return response()->json($allPages);
+    }
+
+    public function delete($pageId)
+    {
+        $this->cmsPageService->deletePage($pageId);
+    }
+
 }

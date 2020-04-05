@@ -22,7 +22,11 @@ Route::middleware(['api'])->group(function () {
     /*
      * Pages
      */
-    Route::get('/pages/create', 'Cms\PageController@store');
+    Route::post('/pages/create', 'Cms\PageController@store');
+    Route::put('/pages/update/{id}', 'Cms\PageController@update');
+    Route::get('/pages/{id}', 'Cms\PageController@show');
+    Route::get('/pages/', 'Cms\PageController@index');
+    Route::delete('/pages/{id}', 'Cms\PageController@delete');
 
     Route::get('user/profile', function () {
         // Uses first & second Middleware
