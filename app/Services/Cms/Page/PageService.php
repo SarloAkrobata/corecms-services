@@ -18,8 +18,33 @@ class PageService
         $this->pageRepository = $pageRepository;
     }
 
-    public function createPage()
+    public function createPage($data)
     {
+        $this->pageRepository->create($data);
+    }
 
+    public function updatePage($id, $data)
+    {
+        $page = $this->pageRepository->show($id);
+        $this->pageRepository->update($data, $page);
+    }
+
+    public function getPage($pageId)
+    {
+        $page = $this->pageRepository->show($pageId);
+
+        return $page;
+    }
+
+    public function getAllPages()
+    {
+       return $this->pageRepository->all();
+
+    }
+
+    public function deletePage($pageId)
+    {
+        $page = $this->pageRepository->show($pageId);
+        $this->pageRepository->delete($page);
     }
 }

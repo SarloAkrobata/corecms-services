@@ -10,7 +10,7 @@ class PageRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'bail|required|unique:pages|max:255',
+            'title' => 'bail|required|max:255',
             'description' => 'required',
             'content' => 'required',
             'layout' => 'required',
