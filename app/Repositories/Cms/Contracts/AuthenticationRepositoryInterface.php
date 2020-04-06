@@ -15,4 +15,6 @@ interface AuthenticationRepositoryInterface extends RepositoryInterface
      */
     public function wherePaginate($param, $operator, $value, $amount);
 
+    public function findUserByEmail($value);
+
 }

@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::middleware(['api'])->group(function () {
     Route::post('/auth/signup', 'Cms\Authentication\Authentication@signup');
-    Route::post('login', 'Authentication@login');
+    Route::post('/auth/login', 'Cms\Authentication\Authentication@login');
     /*
      * Menu
      */

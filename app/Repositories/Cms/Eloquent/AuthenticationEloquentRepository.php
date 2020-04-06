@@ -24,4 +24,9 @@ class AuthenticationEloquentRepository extends EloquentRepository implements Aut
     {
         // TODO: Implement wherePaginate() method.
     }
+
+    public function findUserByEmail($value)
+    {
+        return $this->model->where('email', $value)->first();
+    }
 }
