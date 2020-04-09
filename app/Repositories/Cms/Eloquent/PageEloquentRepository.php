@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Cms\Eloquent;
 
-use App\Models\Frontend\Page;
+use App\Models\Cms\Page\Page;
 use App\Repositories\EloquentRepository;
-use App\Repositories\Frontend\Contracts\PageRepositoryInterface;
+use App\Repositories\Cms\Contracts\PageRepositoryInterface;
 
 class PageEloquentRepository extends EloquentRepository implements PageRepositoryInterface
 {

@@ -6,6 +6,7 @@ use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\SignupRequest;
 use App\Services\Cms\Authentication\AuthenticationService;
 use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 
 class Authentication
@@ -40,12 +41,13 @@ class Authentication
         $token = $this->createToken($user->role);
 
         return response()->json([
-            'token' => $token->getPayload()
+            'token' => $token->__toString()
         ], 200);
     }
 
 
     private function createToken($aud) {
+        $signer = new Sha256();
         $time = time();
         $token = (new Builder())->issuedBy('http://corecms.com') // Configures the issuer (iss claim)
         ->permittedFor($aud) // Configures the audience (aud claim)
@@ -54,7 +56,7 @@ class Authentication
         ->canOnlyBeUsedAfter($time + 60) // Configures the time that the token can be used (nbf claim)
         ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
         ->withClaim('uid', 1) // Configures a new claim, called "uid"
-        ->getToken(); // Retrieves the generated token
+        ->getToken($signer, new Key('kljuc')); // Retrieves the generated token
 
         return $token;
     }
