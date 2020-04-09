@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cms\Authentication;
 use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\SignupRequest;
 use App\Services\Cms\Authentication\AuthenticationService;
+use Illuminate\Support\Str;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
@@ -38,7 +39,7 @@ class Authentication
             ], 401);
         }
 
-        $token = $this->createToken($user->role);
+        $token = $this->createToken($user);
 
         return response()->json([
             'token' => $token->__toString()
@@ -46,17 +47,17 @@ class Authentication
     }
 
 
-    private function createToken($aud) {
+    private function createToken($user) {
         $signer = new Sha256();
         $time = time();
-        $token = (new Builder())->issuedBy('http://corecms.com') // Configures the issuer (iss claim)
-        ->permittedFor($aud) // Configures the audience (aud claim)
-        ->identifiedBy('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
+        $token = (new Builder())->issuedBy(config('token.issuedBy')) // Configures the issuer (iss claim)
+        ->permittedFor($user->role) // Configures the audience (aud claim)
+        ->identifiedBy(Str::random(40), true) // Configures the id (jti claim), replicating as a header item
         ->issuedAt($time) // Configures the time that the token was issue (iat claim)
-        ->canOnlyBeUsedAfter($time + 60) // Configures the time that the token can be used (nbf claim)
+        ->canOnlyBeUsedAfter($time) // Configures the time that the token can be used (nbf claim)
         ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
-        ->withClaim('uid', 1) // Configures a new claim, called "uid"
-        ->getToken($signer, new Key('kljuc')); // Retrieves the generated token
+        ->withClaim('uid', $user->id) // Configures a new claim, called "uid"
+        ->getToken($signer, new Key(config('token.tokenSign'))); // Retrieves the generated token
 
         return $token;
     }

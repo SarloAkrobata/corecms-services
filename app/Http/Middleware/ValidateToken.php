@@ -33,7 +33,7 @@ class ValidateToken
 
             $signer = new Sha256();
 
-            if ($token->validate($data) && $token->verify($signer, 'kljuc')) {
+            if ($token->validate($data) && $token->verify($signer, config('token.tokenSign'))) {
                 return $next($request);
             }
         }
