@@ -20,11 +20,10 @@ class ValidateToken
     {
         $token = $request->bearerToken();
         if (!empty($token)) {
-            $token = (new Parser())->parse((string) $token);
             try {
                 $token = (new Parser())->parse((string) $token);
             } catch (\Exception $e) {
-                return response()->json(['message' => 'Unauthorized!'], 401);
+                return response()->json(['message' => 'Unauthorized 1!'], 401);
             }
 
             $data = new ValidationData(); // It will use the current time to validate (iat, nbf and exp)

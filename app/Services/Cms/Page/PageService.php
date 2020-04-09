@@ -12,15 +12,31 @@ class PageService
     private $pageRepository;
     private $routeService;
 
+    /**
+     * PageService constructor.
+     * @param PageRepositoryInterface $pageRepository
+     * @param RouteService $routeService
+     */
     public function __construct(PageRepositoryInterface $pageRepository, RouteService $routeService)
     {
         $this->routeService = $routeService;
         $this->pageRepository = $pageRepository;
     }
 
-    public function createPage($data)
+    /**
+     * @param array $data
+     * @return bool
+     * @throws \Exception
+     */
+    public function createPage(array $data): bool
     {
-        $this->pageRepository->create($data);
+        try {
+            $this->pageRepository->create($data);
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 
     public function updatePage($id, $data)

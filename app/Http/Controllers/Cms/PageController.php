@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Page\PageRequest;
 use App\Services\Frontend\PageService;
 use App\Services\Cms\Page\PageService as CmsPageService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -30,9 +31,18 @@ class PageController extends Controller
         return response()->json($nav['nav']);
     }
 
-    public function store(PageRequest $request)
+    /**
+     * @param PageRequest $request
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function store(PageRequest $request): JsonResponse
     {
-        $this->cmsPageService->createPage($request->all());
+        if (!$this->cmsPageService->createPage($request->all())) {
+            return response()->json(['error' => 'not created']);
+        }
+
+        return response()->json(['message' => 'created'], 201);
     }
 
     public function update($id, PageRequest $request)
