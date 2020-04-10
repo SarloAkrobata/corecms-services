@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key;
+use Lcobucci\JWT\Token;
 
 class AuthenticationService
 {
@@ -46,7 +47,12 @@ class AuthenticationService
         return false;
     }
 
-    public function createToken($user) {
+    /**
+     * @param User $user
+     * @return Token
+     */
+    public function createToken(User $user): Token
+    {
         $signer = new Sha256();
         $time = time();
         $token = (new Builder())->issuedBy(config('token.issuedBy')) // Configures the issuer (iss claim)
