@@ -5,10 +5,6 @@ namespace App\Http\Controllers\Cms\Authentication;
 use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\SignupRequest;
 use App\Services\Cms\Authentication\AuthenticationService;
-use Illuminate\Support\Str;
-use Lcobucci\JWT\Builder;
-use Lcobucci\JWT\Signer\Key;
-use Lcobucci\JWT\Signer\Hmac\Sha256;
 
 class Authentication
 {
@@ -39,26 +35,10 @@ class Authentication
             ], 401);
         }
 
-        $token = $this->createToken($user);
+        $token = $this->service->createToken($user);
 
         return response()->json([
             'token' => $token->__toString()
         ], 200);
-    }
-
-
-    private function createToken($user) {
-        $signer = new Sha256();
-        $time = time();
-        $token = (new Builder())->issuedBy(config('token.issuedBy')) // Configures the issuer (iss claim)
-        ->permittedFor($user->role) // Configures the audience (aud claim)
-        ->identifiedBy(Str::random(40), true) // Configures the id (jti claim), replicating as a header item
-        ->issuedAt($time) // Configures the time that the token was issue (iat claim)
-        ->canOnlyBeUsedAfter($time) // Configures the time that the token can be used (nbf claim)
-        ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
-        ->withClaim('uid', $user->id) // Configures a new claim, called "uid"
-        ->getToken($signer, new Key(config('token.tokenSign'))); // Retrieves the generated token
-
-        return $token;
     }
 }

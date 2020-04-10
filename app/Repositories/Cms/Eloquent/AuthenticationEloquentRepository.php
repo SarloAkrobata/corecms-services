@@ -27,6 +27,6 @@ class AuthenticationEloquentRepository extends EloquentRepository implements Aut
 
     public function findUserByEmail($value)
     {
-        return $this->model->where('email', $value)->first();
+        return $this->model->where('email', $value)->firstOrFail();
     }
 }
