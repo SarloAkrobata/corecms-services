@@ -1,26 +1,22 @@
 <?php
 
-
 namespace App\Services\Cms\Page;
 
-
+use App\Models\Cms\Page\Page;
 use App\Repositories\Cms\Contracts\PageRepositoryInterface;
-use App\Services\Frontend\RouteService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
 class PageService
 {
     private $pageRepository;
-    private $routeService;
 
     /**
      * PageService constructor.
      * @param PageRepositoryInterface $pageRepository
-     * @param RouteService $routeService
      */
-    public function __construct(PageRepositoryInterface $pageRepository, RouteService $routeService)
+    public function __construct(PageRepositoryInterface $pageRepository)
     {
-        $this->routeService = $routeService;
         $this->pageRepository = $pageRepository;
     }
 
@@ -42,7 +38,12 @@ class PageService
         return true;
     }
 
-    public function updatePage($id, $data)
+    /**
+     * @param int $id
+     * @param array $data
+     * @return bool
+     */
+    public function updatePage(int $id, array $data): bool
     {
         $page = $this->pageRepository->show($id);
         try {
@@ -56,17 +57,28 @@ class PageService
         return true;
     }
 
-    public function getPage($pageId)
+    /**
+     * @param int $pageId
+     * @return Page
+     */
+    public function getPage(int $pageId): Page
     {
         return $this->pageRepository->show($pageId);
     }
 
-    public function getAllPages()
+    /**
+     * @return Collection
+     */
+    public function getAllPages(): Collection
     {
        return $this->pageRepository->all();
     }
 
-    public function deletePage($pageId)
+    /**
+     * @param int $pageId
+     * @return bool
+     */
+    public function deletePage(int $pageId): bool
     {
         $page = $this->pageRepository->show($pageId);
         try {

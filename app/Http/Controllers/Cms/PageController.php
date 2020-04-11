@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers\Cms;
 
+use App\Factory\CmsPage\CmsPageFactory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Page\PageRequest;
 use App\Services\Frontend\PageService;
 use App\Services\Cms\Page\PageService as CmsPageService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
     private $pageService;
     private $cmsPageService;
+    private $cmsPageFactory;
 
-    public function __construct(PageService $pageService, CmsPageService $cmsPageService)
+    public function __construct(PageService $pageService, CmsPageService $cmsPageService, CmsPageFactory $cmsPageFactory)
     {
         $this->pageService = $pageService;
         $this->cmsPageService = $cmsPageService;
+        $this->cmsPageFactory = $cmsPageFactory;
     }
 
     public function getMenu($slug = 'home')
@@ -56,12 +58,12 @@ class PageController extends Controller
 
     public function show($pageId)
     {
-        return response()->json($this->cmsPageService->getPage($pageId));
+        return $this->cmsPageFactory->makeResource($this->cmsPageService->getPage($pageId));
     }
 
     public function index()
     {
-        return response()->json($this->cmsPageService->getAllPages());
+        return $this->cmsPageFactory->makeResourceCollection($this->cmsPageService->getAllPages());
     }
 
     public function delete($pageId)
