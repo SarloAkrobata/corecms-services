@@ -56,19 +56,21 @@ class PageController extends Controller
 
     public function show($pageId)
     {
-        $page = $this->cmsPageService->getPage($pageId);
-        return response()->json($page);
+        return response()->json($this->cmsPageService->getPage($pageId));
     }
 
     public function index()
     {
-        $allPages = $this->cmsPageService->getAllPages();
-        return response()->json($allPages);
+        return response()->json($this->cmsPageService->getAllPages());
     }
 
     public function delete($pageId)
     {
-        $this->cmsPageService->deletePage($pageId);
+        if (!$this->cmsPageService->deletePage($pageId)) {
+            return response()->json(['error' => 'not deleted']);
+        }
+
+        return response()->json(['message' => 'deleted'], 200);
     }
 
 }

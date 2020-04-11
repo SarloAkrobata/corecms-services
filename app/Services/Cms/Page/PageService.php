@@ -56,15 +56,12 @@ class PageService
 
     public function getPage($pageId)
     {
-        $page = $this->pageRepository->show($pageId);
-
-        return $page;
+        return $this->pageRepository->show($pageId);
     }
 
     public function getAllPages()
     {
        return $this->pageRepository->all();
-
     }
 
     public function deletePage($pageId)
