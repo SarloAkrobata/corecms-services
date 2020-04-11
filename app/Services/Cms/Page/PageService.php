@@ -6,6 +6,7 @@ namespace App\Services\Cms\Page;
 
 use App\Repositories\Cms\Contracts\PageRepositoryInterface;
 use App\Services\Frontend\RouteService;
+use Illuminate\Support\Facades\Log;
 
 class PageService
 {
@@ -33,6 +34,7 @@ class PageService
         try {
             $this->pageRepository->create($data);
         } catch (\Exception $e) {
+            Log::error('CreatePAGE', [$e->getMessage(), $e->getTrace()]);
             return false;
         }
 
