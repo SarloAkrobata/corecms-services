@@ -35,6 +35,7 @@ class PageService
             $this->pageRepository->create($data);
         } catch (\Exception $e) {
             Log::error('CreatePAGE', [$e->getMessage(), $e->getTrace()]);
+
             return false;
         }
 
@@ -46,8 +47,9 @@ class PageService
         $page = $this->pageRepository->show($id);
         try {
             $this->pageRepository->update($data, $page);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             Log::error('UpdatePAGE', [$e->getMessage(), $e->getTrace()]);
+
             return false;
         }
 
@@ -71,6 +73,7 @@ class PageService
             $this->pageRepository->delete($page);
         } catch (\Exception $e) {
             Log::error('DeletePAGE', [$e->getMessage(), $e->getTrace()]);
+
             return false;
         }
 
