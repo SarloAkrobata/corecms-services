@@ -44,7 +44,14 @@ class PageService
     public function updatePage($id, $data)
     {
         $page = $this->pageRepository->show($id);
-        $this->pageRepository->update($data, $page);
+        try {
+            $this->pageRepository->update($data, $page);
+        }catch (\Exception $e) {
+            Log::error('UpdatePAGE', [$e->getMessage(), $e->getTrace()]);
+            return false;
+        }
+
+        return true;
     }
 
     public function getPage($pageId)
@@ -63,6 +70,13 @@ class PageService
     public function deletePage($pageId)
     {
         $page = $this->pageRepository->show($pageId);
-        $this->pageRepository->delete($page);
+        try {
+            $this->pageRepository->delete($page);
+        } catch (\Exception $e) {
+            Log::error('DeletePAGE', [$e->getMessage(), $e->getTrace()]);
+            return false;
+        }
+
+        return true;
     }
 }

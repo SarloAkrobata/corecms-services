@@ -47,7 +47,11 @@ class PageController extends Controller
 
     public function update($id, PageRequest $request)
     {
-        $this->cmsPageService->updatePage($id, $request->all());
+        if (!$this->cmsPageService->updatePage($id, $request->all())) {
+            return response()->json(['error' => 'not updated']);
+        }
+
+        return response()->json(['message' => 'updated'], 200);
     }
 
     public function show($pageId)
