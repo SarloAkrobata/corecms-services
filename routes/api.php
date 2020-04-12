@@ -18,7 +18,7 @@ Route::middleware(['api'])->group(function () {
     Route::post('/auth/login', 'Cms\Authentication\Authentication@login');
 
     Route::group(['middleware' => ['validate.token']], function () {
-
+        Route::get('/token/validate', 'Cms\Authentication\Authentication@ping');
         /*
          * Menu
          */

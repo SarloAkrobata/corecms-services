@@ -41,4 +41,12 @@ class Authentication
             'token' => $token->__toString()
         ], 200);
     }
+
+    public function ping()
+    {
+        return [
+            'status' => 'success',
+            'message' => 'pong'
+        ];
+    }
 }
