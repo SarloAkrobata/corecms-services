@@ -36,7 +36,10 @@ Route::middleware(['api'])->group(function () {
         Route::get('user/profile', function () {
             // Uses first & second Middleware
         });
-
+        /*
+         * Images
+         */
+        Route::post('/images/upload', 'Cms\ImageController@upload');
     });
 
 });
