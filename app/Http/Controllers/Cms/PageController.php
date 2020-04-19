@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers\Cms;
 
-use App\Factory\CmsPage\CmsPageFactory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Page\PageRequest;
+use App\Http\Resources\Page\CmsPageResource;
 use App\Services\Frontend\PageService;
 use App\Services\Cms\Page\PageService as CmsPageService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PageController extends Controller
 {
     private $pageService;
     private $cmsPageService;
-    private $cmsPageFactory;
 
-    public function __construct(PageService $pageService, CmsPageService $cmsPageService, CmsPageFactory $cmsPageFactory)
+    public function __construct(PageService $pageService, CmsPageService $cmsPageService)
     {
         $this->pageService = $pageService;
         $this->cmsPageService = $cmsPageService;
-        $this->cmsPageFactory = $cmsPageFactory;
     }
 
     public function getMenu($slug = 'home')
@@ -47,7 +46,12 @@ class PageController extends Controller
         return response()->json(['message' => 'created'], 201);
     }
 
-    public function update($id, PageRequest $request)
+    /**
+     * @param $id
+     * @param PageRequest $request
+     * @return JsonResponse
+     */
+    public function update($id, PageRequest $request): JsonResponse
     {
         if (!$this->cmsPageService->updatePage($id, $request->all())) {
             return response()->json(['error' => 'not updated']);
@@ -56,17 +60,28 @@ class PageController extends Controller
         return response()->json(['message' => 'updated'], 200);
     }
 
-    public function show($pageId)
+    /**
+     * @param $pageId
+     * @return CmsPageResource
+     */
+    public function show($pageId): CmsPageResource
     {
-        return $this->cmsPageFactory->makeResource($this->cmsPageService->getPage($pageId));
+        return CmsPageResource::make($this->cmsPageService->getPage($pageId));
     }
 
-    public function index()
+    /**
+     * @return AnonymousResourceCollection
+     */
+    public function index(): AnonymousResourceCollection
     {
-        return $this->cmsPageFactory->makeResourceCollection($this->cmsPageService->getAllPages());
+        return CmsPageResource::collection($this->cmsPageService->getAllPages());
     }
 
-    public function delete($pageId)
+    /**
+     * @param $pageId
+     * @return JsonResponse
+     */
+    public function delete($pageId): JsonResponse
     {
         if (!$this->cmsPageService->deletePage($pageId)) {
             return response()->json(['error' => 'not deleted']);
