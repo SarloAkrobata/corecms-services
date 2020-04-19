@@ -40,6 +40,14 @@ Route::middleware(['api'])->group(function () {
          * Images
          */
         Route::post('/images/upload', 'Cms\Image\ImageController@upload');
+        /*
+         * Albums
+         */
+        Route::post('/albums/create', 'Cms\Image\AlbumController@store');
+        Route::put('/albums/update/{id}', 'Cms\Image\AlbumController@update');
+        Route::get('/albums/{id}', 'Cms\Image\AlbumController@show');
+        Route::get('/albums/', 'Cms\Image\AlbumController@index');
+        Route::delete('/albums/{id}', 'Cms\Image\AlbumController@delete');
     });
 
 });
