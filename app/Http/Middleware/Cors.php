@@ -10,7 +10,15 @@ class Cors
     protected $settings = array(
         'origin' => '*',    // Wide Open!
         'allowMethods' => 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
-        'allowHeaders' => ['x-real-ip', 'x-forwarded-for', 'x-requested-with', 'content-type', 'authorization']
+        'allowHeaders' => [
+            'x-real-ip',
+            'x-forwarded-for',
+            'x-requested-with',
+            'content-type',
+            'authorization',
+            'cache-control',
+            'access-control-allow-origin'
+        ]
     );
 
     protected function setOrigin($req, $rsp)
@@ -23,7 +31,7 @@ class Cors
                 $req->header("Origin")
             );
         }
-        $rsp->header('Access-Control-Allow-Origin', $origin);
+//        $rsp->header('Access-Control-Allow-Origin', $origin);
     }
 
     protected function setExposeHeaders($req, $rsp)

@@ -39,7 +39,7 @@ Route::middleware(['api'])->group(function () {
         /*
          * Images
          */
-        Route::post('/images/upload', 'Cms\ImageController@upload');
+        Route::post('/images/upload', 'Cms\Image\ImageController@upload');
     });
 
 });
