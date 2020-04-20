@@ -19,7 +19,8 @@ class CmsServiceProvider extends ServiceProvider
                 'Page',
                 'Route',
                 'Image',
-                'Album'
+                'Album',
+                'Menu'
             ],
             'Frontend' => [
                 'Page',
