@@ -48,6 +48,16 @@ Route::middleware(['api'])->group(function () {
         Route::get('/albums/{id}', 'Cms\Image\AlbumController@show');
         Route::get('/albums/', 'Cms\Image\AlbumController@index');
         Route::delete('/albums/{id}', 'Cms\Image\AlbumController@delete');
+        /*
+         * Menus
+         */
+        Route::post('/menus/create', 'Cms\Menu\MenuController@store');
+        Route::put('/menus/update/{id}', 'Cms\Menu\MenuController@update');
+        Route::get('/menus/{id}', 'Cms\Menu\MenuController@show');
+        Route::get('/menus/', 'Cms\Menu\MenuController@index');
+        Route::delete('/menus/{id}', 'Cms\Menu\MenuController@delete');
+
+        Route::post('/menus/{id}/routes', 'Cms\Menu\RouteController@store');
     });
 
 });

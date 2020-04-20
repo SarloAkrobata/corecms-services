@@ -27,7 +27,9 @@ class PageService
      */
     public function createPage(array $data): bool
     {
+        dd('Ovde=>>>>',$data);
         try {
+
             $this->pageRepository->create($data);
         } catch (\Exception $e) {
             Log::error('CreatePAGE', [$e->getMessage(), $e->getTrace()]);

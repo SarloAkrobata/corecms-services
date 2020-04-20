@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Cms\Eloquent;
 
-use App\Models\Frontend\Route;
+use App\Models\Cms\Menu\Route;
 use App\Repositories\EloquentRepository;
-use App\Repositories\Frontend\Contracts\RouteRepositoryInterface;
+use App\Repositories\Cms\Contracts\RouteRepositoryInterface;
 
 class RouteEloquentRepository extends EloquentRepository implements RouteRepositoryInterface
 {
@@ -16,18 +16,8 @@ class RouteEloquentRepository extends EloquentRepository implements RouteReposit
         parent::__construct($model);
     }
 
-    public function firstOrFail($value)
+    public function firstOrFail($slug)
     {
-        return $this->model->where('route_path', $value)->firstOrFail();
-    }
-
-    public function all()
-    {
-        return $this->model->all()->sortBy('order_number');
-    }
-
-    public function reOrderMenuItems($id)
-    {
-
+        // TODO: Implement firstOrFail() method.
     }
 }
