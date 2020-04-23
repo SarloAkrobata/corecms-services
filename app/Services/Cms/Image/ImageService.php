@@ -19,27 +19,29 @@ class ImageService
         $this->albumRepository = $albumRepository;
     }
 
-    public function upload($file, $albumId)
+    /**
+     * @param $files
+     * @param $albumName
+     * @return int
+     */
+    public function upload($files, $albumName)
     {
-        $newFileName = Str::random(40);
-        $newFile = $newFileName . '.' . $file->getClientOriginalExtension();
-        $file->move(self::IMAGES_PATH, $newFile);
-        $uploadedFileData = [
-            'name' => $file->getClientOriginalName(),
-            'origin' => self::IMAGES_PATH . '/' . $newFile,
-            'medium' => self::IMAGES_PATH . '/' . $newFile,
-            'small' => self::IMAGES_PATH . '/' . $newFile,
-            'album_id' => $albumId
-        ];
-        $this->imageRepository->create($uploadedFileData);
-    }
+        $album = $this->albumRepository->create(['name' => $albumName]);
 
-    public function createAlbum($album)
-    {
-        if (empty($album)) {
-            $album = self::DEFUALT_ALBUM;
+        foreach ($files['file'] as $file) {
+            $newFileName = Str::random(40);
+            $newFile = $newFileName . '.' . $file->getClientOriginalExtension();
+            $file->move(self::IMAGES_PATH, $newFile);
+            $uploadedFileData = [
+                'name' => $file->getClientOriginalName(),
+                'origin' => self::IMAGES_PATH . '/' . $newFile,
+                'medium' => self::IMAGES_PATH . '/' . $newFile,
+                'small' => self::IMAGES_PATH . '/' . $newFile,
+                'album_id' => $album->id
+            ];
+            $this->imageRepository->create($uploadedFileData);
         }
 
-        return $this->albumRepository->create(['name' => $album]);
+        return $album->id;
     }
 }

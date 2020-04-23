@@ -20,10 +20,8 @@ class CreatePagesTable extends Migration
             $table->text('content');
             $table->string('layout');
             $table->boolean('published');
-            $table->integer('album_id')->unsigned();
+            $table->integer('album_id')->nullable(true);
             $table->timestamps();
-
-            $table->foreign('album_id')->references('id')->on('albums');
         });
     }
 

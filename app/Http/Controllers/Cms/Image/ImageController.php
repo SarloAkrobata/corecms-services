@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Image\ImageRequest;
 use App\Services\Cms\Image\ImageService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
@@ -16,13 +17,16 @@ class ImageController extends Controller
         $this->imageService = $imageService;
     }
 
-    public function upload(ImageRequest $request): JsonResponse
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function upload(Request $request): JsonResponse
     {
-        $file = $request->file('file');
-        $album = $this->imageService->createAlbum($request->get('album'));
-        $this->imageService->upload($file, $album->id);
+        $files = $request->allFiles();
+        $albumId = $this->imageService->upload($files, $request->get('album'));
 
-        return response()->json(['message' => 'created'], 201);
+        return response()->json(['message' => 'created', 'data' => ['albumId' => $albumId]], 201);
     }
 
 
