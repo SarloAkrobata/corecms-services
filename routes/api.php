@@ -32,9 +32,12 @@ Route::middleware(['api'])->group(function () {
         Route::get('/pages/{id}', 'Cms\PageController@show');
         Route::get('/pages/', 'Cms\PageController@index');
         Route::delete('/pages/{id}', 'Cms\PageController@delete');
+        Route::get('/layouts', 'Cms\PageController@getLayouts');
+
+
 
         Route::get('user/profile', function () {
-            // Uses first & second Middleware
+
         });
         /*
          * Images

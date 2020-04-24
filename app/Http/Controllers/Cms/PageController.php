@@ -9,6 +9,7 @@ use App\Services\Frontend\PageService;
 use App\Services\Cms\Page\PageService as CmsPageService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\File;
 
 class PageController extends Controller
 {
@@ -89,5 +90,19 @@ class PageController extends Controller
 
         return response()->json(['message' => 'deleted'], 200);
     }
+
+    public function getLayouts()
+    {
+        $dir    = base_path('resources/views/theme/layout');
+        $files = File::files($dir);
+        $layouts = [];
+        foreach ($files as $file) {
+            $fileName = explode('.',$file->getFilenameWithoutExtension());
+            $layouts[] = $fileName[0];
+
+        }
+        return response()->json(['layouts' => $layouts]);
+    }
+
 
 }
