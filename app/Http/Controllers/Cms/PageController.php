@@ -101,7 +101,7 @@ class PageController extends Controller
         $layouts = [];
         foreach ($files as $file) {
             $fileName = explode('.',$file->getFilenameWithoutExtension());
-            $layouts[] = $fileName[0];
+            $layouts[] = ['name' => $fileName[0]];
 
         }
         return response()->json(['layouts' => $layouts]);
