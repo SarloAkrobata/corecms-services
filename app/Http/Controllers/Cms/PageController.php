@@ -91,7 +91,10 @@ class PageController extends Controller
         return response()->json(['message' => 'deleted'], 200);
     }
 
-    public function getLayouts()
+    /**
+     * @return JsonResponse
+     */
+    public function getLayouts(): JsonResponse
     {
         $dir    = base_path('resources/views/theme/layout');
         $files = File::files($dir);
