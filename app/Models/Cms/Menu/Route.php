@@ -9,6 +9,7 @@ class Route extends Model
     protected $table = 'routes';
     protected $fillable = [
         'route_path',
+        'route_name',
         'page_id',
         'parent_route',
         'order_number',

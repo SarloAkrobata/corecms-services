@@ -16,7 +16,6 @@ class PageController extends Controller
 
     public function render($slug = 'home')
     {
-        //dd($this->pageService->getAllData($slug));
         return view('theme.template.main', $this->pageService->getAllData($slug));
     }
 

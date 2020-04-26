@@ -20,21 +20,49 @@ class RouteService
     public function createMenuItems($data)
     {
         foreach ($data['menu'] as $key => $item) {
-            if ($item['text'] == 'about' || $item['text'] == 'kontakt') {
-                continue;
-            }
             if (!empty($item['children'])) {
                 $route = [
-                    'route_path' => $item['text'],
-                    'page_id' => 999,
-                    'parent_route' => $key,
-                    'order_number' => 99,
-                    'menu_id' => 2
+                    'route_path' => $item['route'],
+                    'route_name' => $item['name'],
+                    'page_id' => 1,
+                    'parent_route' => 0,
+                    'order_number' => $key,
+                    'menu_id' => 1
                 ];
+                $route = $this->routeRepository->create($route);
+                $id = $route['id'];
+
+                $this->recursion($item['children'], $id);
+            } else {
+                $route = [
+                    'route_path' => $item['route'],
+                    'route_name' => $item['name'],
+                    'page_id' => 1,
+                    'parent_route' => 0,
+                    'order_number' => $key,
+                    'menu_id' => 1
+                ];
+                $this->routeRepository->create($route);
             }
-
-
-            $this->routeRepository->create([]);
         }
+    }
+
+    private function recursion($children, $id){
+        foreach ($children as $key => $child) {
+            $route = [
+                'route_path' => $child['route'],
+                'route_name' => $child['name'],
+                'page_id' => 1,
+                'parent_route' => $id,
+                'order_number' => $key,
+                'menu_id' => 1
+            ];
+            $route = $this->routeRepository->create($route);
+            $newId = $route['id'];
+            if (!empty($child['children'])) {
+                $this->recursion($child['children'], $newId);
+            }
+        }
+        return [];
     }
 }

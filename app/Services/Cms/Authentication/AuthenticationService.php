@@ -60,7 +60,7 @@ class AuthenticationService
         ->identifiedBy(Str::random(40), true) // Configures the id (jti claim), replicating as a header item
         ->issuedAt($time) // Configures the time that the token was issue (iat claim)
         ->canOnlyBeUsedAfter($time) // Configures the time that the token can be used (nbf claim)
-        ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
+        ->expiresAt($time + 604800) // Configures the expiration time of the token (exp claim)
         ->withClaim('uid', $user->id) // Configures a new claim, called "uid"
         ->getToken($signer, new Key(config('token.tokenSign'))); // Retrieves the generated token
 

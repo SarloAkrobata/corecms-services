@@ -16,13 +16,13 @@ class CreateRoutesTable extends Migration
         Schema::create('routes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('route_path');
-            $table->integer('page_id')->unsigned();
+            $table->string('route_name');
+            $table->integer('page_id');
             $table->integer('parent_route');
             $table->integer('order_number');
             $table->integer('menu_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('page_id')->references('id')->on('pages');
             $table->foreign('menu_id')->references('id')->on('menus');
         });
     }
