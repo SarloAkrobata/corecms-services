@@ -19,7 +19,7 @@ class RouteService
 
     public function createMenuItems($data)
     {
-        foreach ($data['menu'] as $key => $item) {
+        foreach ($data['data'] as $key => $item) {
             if (!empty($item['children'])) {
                 $route = [
                     'route_path' => $item['route'],

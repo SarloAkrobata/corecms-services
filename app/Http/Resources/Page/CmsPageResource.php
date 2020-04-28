@@ -20,6 +20,7 @@ class CmsPageResource extends JsonResource
             'description' => $this->description,
             'content' => $this->content,
             'layout' => $this->layout,
+            'album_id' => $this->album_id,
             'published' => $this->published,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
