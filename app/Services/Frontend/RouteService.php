@@ -29,7 +29,8 @@ class RouteService
                 'id' => $item->id,
                 'path'=> $item->route_path,
                 'name'=> $item->route_name,
-                'parent_route'=>$item->parent_route
+                'parent_route'=>$item->parent_route,
+                'menu_id' => $item->menu->name,
             ];
         }
         foreach ($routes as $a){

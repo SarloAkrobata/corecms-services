@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Services\Frontend\PageService;
+use Illuminate\Support\Facades\Request;
 
 class PageController extends Controller
 {
@@ -16,6 +17,7 @@ class PageController extends Controller
 
     public function render($slug = 'home')
     {
+//        dd(Request::segment(3));
         return view('theme.template.main', $this->pageService->getAllData($slug));
     }
 
