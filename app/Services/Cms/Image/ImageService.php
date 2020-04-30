@@ -44,4 +44,9 @@ class ImageService
 
         return $album->id;
     }
+
+    public function getImagesByAlbumID($id)
+    {
+       return $this->imageRepository->getImagesByAlbumID($id);
+    }
 }

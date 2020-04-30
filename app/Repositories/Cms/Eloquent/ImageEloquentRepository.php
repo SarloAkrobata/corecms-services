@@ -24,4 +24,12 @@ class ImageEloquentRepository extends EloquentRepository implements ImageReposit
     {
         // TODO: Implement wherePaginate() method.
     }
+
+    public function getImagesByAlbumID($id)
+    {
+        return $this->model->join('albums', 'albums.id', '=', 'images.album_id')
+            ->select('images.*')
+            ->where('album_id', $id)
+            ->get();
+    }
 }

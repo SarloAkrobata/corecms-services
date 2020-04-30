@@ -29,5 +29,10 @@ class ImageController extends Controller
         return response()->json(['message' => 'created', 'data' => ['albumId' => $albumId]], 201);
     }
 
+    public function getImagesByAlbumID($id)
+    {
+        return $this->imageService->getImagesByAlbumID($id);
+    }
+
 
 }

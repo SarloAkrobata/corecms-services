@@ -15,4 +15,6 @@ interface ImageRepositoryInterface extends RepositoryInterface
      */
     public function wherePaginate($param, $operator, $value, $amount);
 
+    public function getImagesByAlbumID($id);
+
 }

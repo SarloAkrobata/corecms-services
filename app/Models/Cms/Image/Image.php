@@ -10,5 +10,4 @@ class Image extends Model
     protected $fillable = [
         'name', 'origin', 'medium', 'small', 'album_id'
     ];
-
 }
