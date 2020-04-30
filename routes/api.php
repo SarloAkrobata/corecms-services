@@ -45,6 +45,7 @@ Route::middleware(['api'])->group(function () {
          */
         Route::post('/images/upload', 'Cms\Image\ImageController@upload');
         Route::get('/images/album/{id}', 'Cms\Image\ImageController@getImagesByAlbumID');
+        Route::put('/images/update/{id}', 'Cms\Image\ImageController@update');
         /*
          * Albums
          */

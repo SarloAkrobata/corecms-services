@@ -8,6 +8,6 @@ class Image extends Model
 {
     protected $table = 'images';
     protected $fillable = [
-        'name', 'origin', 'medium', 'small', 'album_id'
+        'name', 'origin', 'medium', 'small', 'album_id', 'alt_tag'
     ];
 }

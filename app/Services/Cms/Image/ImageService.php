@@ -2,8 +2,10 @@
 
 namespace App\Services\Cms\Image;
 
+use App\Models\Cms\Image\Image;
 use App\Repositories\Cms\Contracts\AlbumRepositoryInterface;
 use App\Repositories\Cms\Contracts\ImageRepositoryInterface;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class ImageService
@@ -37,7 +39,8 @@ class ImageService
                 'origin' => self::IMAGES_PATH . '/' . $newFile,
                 'medium' => self::IMAGES_PATH . '/' . $newFile,
                 'small' => self::IMAGES_PATH . '/' . $newFile,
-                'album_id' => $album->id
+                'album_id' => $album->id,
+                'alt_tag' => $file->getClientOriginalName()
             ];
             $this->imageRepository->create($uploadedFileData);
         }
@@ -45,8 +48,31 @@ class ImageService
         return $album->id;
     }
 
-    public function getImagesByAlbumID($id)
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getImagesByAlbumID(int $id)
     {
        return $this->imageRepository->getImagesByAlbumID($id);
+    }
+
+    /**
+     * @param $id
+     * @param $data
+     * @return bool
+     */
+    public function update(int $id, array $data): bool
+    {
+        $image = $this->imageRepository->show($id);
+        try {
+            $this->imageRepository->update($data, $image);
+        } catch (\Exception $e) {
+            Log::error('UpdateIMAGE', [$e->getMessage(), $e->getTrace()]);
+
+            return false;
+        }
+
+        return true;
     }
 }

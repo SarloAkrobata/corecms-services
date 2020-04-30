@@ -8,7 +8,7 @@ class Album extends Model
 {
     protected $table = 'albums';
     protected $fillable = [
-        'name'
+        'name', 'position'
     ];
 
 }
