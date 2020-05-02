@@ -34,6 +34,23 @@ class AlbumService
     }
 
     /**
+     * @param array $data
+     * @return int
+     */
+    public function createAlbumAndReturnId(array $data): int
+    {
+        try {
+            $album = $this->albumRepository->create($data);
+        } catch (\Exception $e) {
+            Log::error('CreateALBUM', [$e->getMessage(), $e->getTrace()]);
+
+            return 0;
+        }
+
+        return $album->id;
+    }
+
+    /**
      * @param int $id
      * @param array $data
      * @return bool

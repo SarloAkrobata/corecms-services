@@ -76,4 +76,18 @@ class AlbumController extends Controller
         return response()->json(['message' => 'deleted'], 200);
     }
 
+    /**
+     * @param AlbumRequest $request
+     * @return JsonResponse
+     */
+    public function storeAndReturnId(AlbumRequest $request): JsonResponse
+    {
+        $albumId = $this->cmsAlbumService->createAlbumAndReturnId($request->all());
+        if ($albumId === 0) {
+            return response()->json(['error' => 'not created']);
+        }
+
+        return response()->json(['message' => 'created', 'album_id' => $albumId], 201);
+    }
+
 }

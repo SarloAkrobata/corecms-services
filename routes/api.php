@@ -50,6 +50,7 @@ Route::middleware(['api'])->group(function () {
          * Albums
          */
         Route::post('/albums/create', 'Cms\Image\AlbumController@store');
+        Route::post('/albums/createAndReturn', 'Cms\Image\AlbumController@storeAndReturnId');
         Route::put('/albums/update/{id}', 'Cms\Image\AlbumController@update');
         Route::get('/albums/{id}', 'Cms\Image\AlbumController@show');
         Route::get('/albums/', 'Cms\Image\AlbumController@index');
