@@ -4,20 +4,23 @@ namespace App\Services\Cms\Page;
 
 use App\Models\Cms\Page\Page;
 use App\Repositories\Cms\Contracts\PageRepositoryInterface;
+use App\Repositories\Cms\Contracts\RouteRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
 class PageService
 {
     private $pageRepository;
+    private $routeRepository;
 
     /**
      * PageService constructor.
      * @param PageRepositoryInterface $pageRepository
      */
-    public function __construct(PageRepositoryInterface $pageRepository)
+    public function __construct(PageRepositoryInterface $pageRepository, RouteRepositoryInterface $routeRepository)
     {
         $this->pageRepository = $pageRepository;
+        $this->routeRepository = $routeRepository;
     }
 
     /**
@@ -28,11 +31,17 @@ class PageService
     public function createPage(array $data): bool
     {
         try {
-            $this->pageRepository->create($data);
+            $page = $this->pageRepository->create($data);
         } catch (\Exception $e) {
             Log::error('CreatePAGE', [$e->getMessage(), $e->getTrace()]);
 
             return false;
+        }
+
+        if (!empty($data['route_id'])) {
+            $route = $this->routeRepository->show($data['route_id']);
+            $this->routeRepository->update(['menu_id' => $data['menu_id'],
+                'page_id' => $page['id'] ], $route);
         }
 
         return true;
