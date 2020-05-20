@@ -3,6 +3,7 @@
 namespace App\Services\Frontend;
 
 use App\Repositories\Frontend\Contracts\PageRepositoryInterface;
+use Illuminate\Support\Facades\Cache;
 
 class PageService
 {
@@ -17,9 +18,14 @@ class PageService
 
     public function getAllData($slug)
     {
+        $nav = [];
+        foreach ($this->routeService->getAllRoutes() as $route) {
+            $nav[$route['position']][] = $route;
+        }
+
         return [
             'data' => $this->routeService->getRequestedRouteData($slug),
-            'nav' => $this->routeService->getAllRoutes(),
+            'nav' => $nav,
         ];
     }
 

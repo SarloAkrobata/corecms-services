@@ -3,6 +3,7 @@
 namespace App\Models\Cms\Image;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Album extends Model
 {
@@ -11,4 +12,11 @@ class Album extends Model
         'name', 'position'
     ];
 
+    /**
+     * @return HasMany
+     */
+    public function image(): HasMany
+    {
+        return $this->hasMany(Image::class);
+    }
 }

@@ -30,7 +30,7 @@ class RouteService
                 'path'=> $item->route_path,
                 'name'=> $item->route_name,
                 'parent_route'=>$item->parent_route,
-                'menu_id' => $item->menu->name,
+                'position' => $item->menu->position,
             ];
         }
         foreach ($routes as $a){

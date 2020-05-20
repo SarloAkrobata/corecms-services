@@ -15,9 +15,9 @@
 
         <div class="collapse navbar-collapse" id="main-navigation">
             <ul class="nav navbar-nav ">
-                @foreach($nav as $path => $values)
+                @foreach($nav['header'] as $path => $values)
                     <li>
-                        <a href='{{$path}}' class="dropdown-toggle" data-toggle="dropdown"
+                        <a href='{{$values['path']}}' class="dropdown-toggle" data-toggle="dropdown"
                            role="button" aria-haspopup="true" aria-expanded="false">{{$values['name']}}</a>
                         <ul class="dropdown-submenu dropdown-menu">
                             @isset($values['children'])
